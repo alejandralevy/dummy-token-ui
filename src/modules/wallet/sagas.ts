@@ -33,7 +33,7 @@ export function* walletSaga() {
   yield takeEvery(GET_WALLET_BALANCE_REQUEST, handleGetBalanceRequest)
 }
 
-function* handleConnectWalletRequest() {
+export function* handleConnectWalletRequest() {
   try {
     const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
     yield call([provider, 'send'], 'eth_requestAccounts', []) as Awaited<ReturnType<typeof provider.send>>
