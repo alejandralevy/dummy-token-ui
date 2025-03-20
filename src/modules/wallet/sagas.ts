@@ -1,7 +1,16 @@
-import { ethers } from 'ethers'
+import { ethers, formatUnits } from 'ethers'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { isErrorWithMessage } from '../utils'
-import { connectWalletFailure, connectWalletSuccess, CONNECT_WALLET_REQUEST } from './actions'
+import {
+  connectWalletFailure,
+  connectWalletSuccess,
+  CONNECT_WALLET_REQUEST,
+  GET_WALLET_BALANCE_REQUEST,
+  walletBalanceRequest,
+  WalletBalanceRequest,
+  walletBalanceSuccess,
+  walletBalanceFailure,
+} from './actions'
 import { WindowWithEthereum } from './types'
 
 // The regular `window` object with `ethereum` injected by MetaMask
@@ -13,21 +22,15 @@ if (!TOKEN_ADDRESS) {
   console.error(`Missing env variable VITE_TOKEN_ADDRESS`)
 }
 
-/* This is the Dummy Token ABI (application binary interface)
-  You will need this to interact with the deployed contract, ie:
-
-  const provider = new.ethers.providers.Web3Provider(window.ethereum)
-  const token = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, provider)
-  const balance = await token.balanceOf(walletAddress) // --> returns the balance of DummyToken of the walletAddress
-*/
 export const TOKEN_ABI = [
   'function symbol() view returns (string)',
   'function balanceOf(address) view returns (uint)',
-  'function transfer(address to, uint amount)'
+  'function transfer(address to, uint amount)',
 ]
 
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
+  yield takeEvery(GET_WALLET_BALANCE_REQUEST, handleGetBalanceRequest)
 }
 
 function* handleConnectWalletRequest() {
@@ -35,10 +38,24 @@ function* handleConnectWalletRequest() {
     const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
     yield call([provider, 'send'], 'eth_requestAccounts', []) as Awaited<ReturnType<typeof provider.send>>
     const signer = (yield call([provider, 'getSigner'])) as Awaited<ReturnType<typeof provider.getSigner>>
-
     const address = (yield call([signer, 'getAddress'])) as Awaited<ReturnType<typeof signer.getAddress>>
     yield put(connectWalletSuccess(address))
+    yield put(walletBalanceRequest(address))
   } catch (error) {
     yield put(connectWalletFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
+  }
+}
+
+function* handleGetBalanceRequest(action: WalletBalanceRequest) {
+  try {
+    const address = action.payload
+    const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
+    const token = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, provider)
+    const balance: bigint = yield call(() => token.balanceOf(address))
+    const formatted = formatUnits(balance, 18)
+    console.log('Balance:', formatted)
+    yield put(walletBalanceSuccess(formatted))
+  } catch (error) {
+    yield put(walletBalanceFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
   }
 }
