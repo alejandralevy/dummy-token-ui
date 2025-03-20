@@ -2,12 +2,12 @@ import React from 'react'
 import { Button, Card, Center, Footer, Header, Navbar, Page } from 'decentraland-ui'
 import { Props } from './App.types'
 import './App.css'
+import MainLayout from '../../components/MainLayout'
 
 const App: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, error, balance }) => {
   return (
     <>
-      <Navbar activePage="Wallet" />
-      <Page className="App">
+      <MainLayout className="App">
         <Center>
           {!isConnected ? (
             <>
@@ -35,7 +35,7 @@ const App: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, e
             </>
           )}
         </Center>
-      </Page>
+      </MainLayout>
       <Footer />
     </>
   )

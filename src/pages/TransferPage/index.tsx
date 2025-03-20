@@ -1,10 +1,11 @@
 import React from 'react'
+import MainLayout from '../../components/MainLayout'
 
 const TransferPage: React.FC = () => {
   return (
-    <div>
+    <MainLayout>
       <h1>Transfer Page</h1>
-    </div>
+    </MainLayout>
   )
 }
 
