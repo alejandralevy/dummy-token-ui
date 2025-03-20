@@ -1,14 +1,13 @@
-import React, { ReactNode } from 'react'
-import { Footer, Navbar, Page } from 'decentraland-ui'
+import { Outlet } from 'react-router-dom'
+import { Navbar, Page, Footer } from 'decentraland-ui'
 
-type MainLayoutProps = { className?: string; children: ReactNode }
-
-//TODO see if I can reuse the navbar with Active Page and pass a prop here
-const MainLayout: React.FC<MainLayoutProps> = ({ className, children }) => {
+const MainLayout = () => {
   return (
     <>
       <Navbar activePage="Wallet" />
-      <Page className={className}>{children}</Page>
+      <Page className="App">
+        <Outlet />
+      </Page>
       <Footer />
     </>
   )

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
-import { Center } from 'decentraland-ui'
+import { Button, Center } from 'decentraland-ui'
+import { useNavigate } from 'react-router-dom'
 import { Props } from './App.types'
 import './App.css'
-import MainLayout from '../../components/MainLayout'
 import WalletInfo from '../../components/WalletInfo'
 
 //TODO add decentraland UI componentes
 const App: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, error, balance }) => {
+  const navigate = useNavigate()
   useEffect(() => {
     if (!isConnected) {
       onConnect()
@@ -15,7 +16,14 @@ const App: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, e
 
   const renderContent = () => {
     if (address && balance) {
-      return <WalletInfo address={address} balance={balance} />
+      return (
+        <>
+          <WalletInfo address={address} balance={balance} />
+          <Button primary onClick={() => navigate('/transfer')}>
+            Refresh
+          </Button>
+        </>
+      )
     }
 
     if (isConnecting) {
@@ -31,9 +39,7 @@ const App: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, e
 
   return (
     <>
-      <MainLayout className="App">
-        <Center>{renderContent()}</Center>
-      </MainLayout>
+      <Center>{renderContent()}</Center>
     </>
   )
 }
