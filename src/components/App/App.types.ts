@@ -6,7 +6,7 @@ export type Props = {
   isConnected: boolean
   isConnecting: boolean
   error: string | null
-  balance: bigint | null
+  balance: string | null
   onConnect: () => void
 }
 

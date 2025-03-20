@@ -1,3 +1,4 @@
+import { BigNumberish, formatUnits } from 'ethers'
 import { RootState } from '../types'
 import { createSelector } from 'reselect'
 
@@ -11,4 +12,6 @@ export const isConnecting = createSelector([getWalletState], wallet => wallet.is
 
 export const getError = createSelector([getWalletState], wallet => wallet.error)
 
-export const getBalance = createSelector([getWalletState], wallet => wallet.dummyBalance)
+export const getBalance = createSelector([getWalletState], wallet =>
+  formatUnits(wallet.dummyBalance as BigNumberish, 18)
+)

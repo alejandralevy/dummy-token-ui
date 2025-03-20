@@ -52,8 +52,7 @@ export function* handleGetBalanceRequest(action: WalletBalanceRequest) {
     const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
     const token = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, provider)
     const balance: bigint = yield call(() => token.balanceOf(address))
-    const formatted = formatUnits(balance, 18)
-    yield put(walletBalanceSuccess(formatted))
+    yield put(walletBalanceSuccess(balance))
   } catch (error) {
     yield put(walletBalanceFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
   }

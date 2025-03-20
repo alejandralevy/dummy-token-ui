@@ -1,5 +1,5 @@
 import { RootState } from '../../types'
-import { isConnected } from '../selectors'
+import { getBalance, isConnected } from '../selectors'
 
 describe('wallet selectors', () => {
   let baseState: RootState
@@ -27,4 +27,21 @@ describe('wallet selectors', () => {
     const result = isConnected(baseState)
     expect(result).toBe(true)
   })
+})
+
+it('should return the correct balance from the state', () => {
+  const state: RootState = {
+    wallet: {
+      address: '0xabc123',
+      isConnecting: false,
+      error: null,
+      dummyBalance: BigInt(4000000000000000000), // Balance guardado como BigInt
+      isLoadingBalance: false,
+      balanceError: null,
+    },
+  }
+
+  const formattedBalance = getBalance(state)
+
+  expect(formattedBalance).toBe('4.0')
 })

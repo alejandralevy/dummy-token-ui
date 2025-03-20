@@ -18,7 +18,6 @@ jest.mock('ethers', () => {
       send: jest.fn(),
       getSigner: jest.fn(() => ({ getAddress: jest.fn(() => '0xabc123') })),
     })),
-    formatUnits: jest.fn(() => '4.0'),
   }
 
   return { __esModule: true, ...mock, ethers: mock }
@@ -29,7 +28,10 @@ jest.mock('../../../env', () => ({ TOKEN_ADDRESS: '0xaaa111' }))
 describe('handleGetBalanceRequest', () => {
   it('should dispatch walletBalanceSuccess', () => {
     const testAddress = '0xabc123'
-    return expectSaga(handleGetBalanceRequest, walletBalanceRequest(testAddress)).put(walletBalanceSuccess('4.0')).run()
+    return expectSaga(handleGetBalanceRequest, walletBalanceRequest(testAddress))
+      .put(walletBalanceSuccess(BigInt(4000000000000000000)))
+
+      .run()
   })
 
   it('should set an error after balanceOf fails', () => {

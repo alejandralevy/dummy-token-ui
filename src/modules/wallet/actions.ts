@@ -23,7 +23,7 @@ export function walletBalanceRequest(address: string) {
   return { type: GET_WALLET_BALANCE_REQUEST, payload: address }
 }
 
-export function walletBalanceSuccess(dummyBalance: string) {
+export function walletBalanceSuccess(dummyBalance: bigint) {
   return { type: GET_WALLET_BALANCE_SUCCESS, payload: { dummyBalance } }
 }
 
