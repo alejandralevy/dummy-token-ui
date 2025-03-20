@@ -1,42 +1,39 @@
-import React from 'react'
-import { Button, Card, Center, Footer, Header, Navbar, Page } from 'decentraland-ui'
+import React, { useEffect } from 'react'
+import { Center } from 'decentraland-ui'
 import { Props } from './App.types'
 import './App.css'
 import MainLayout from '../../components/MainLayout'
+import WalletInfo from '../../components/WalletInfo'
 
+//TODO add decentraland UI componentes
 const App: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, error, balance }) => {
+  useEffect(() => {
+    if (!isConnected) {
+      onConnect()
+    }
+  }, [])
+
+  const renderContent = () => {
+    if (address && balance) {
+      return <WalletInfo address={address} balance={balance} />
+    }
+
+    if (isConnecting) {
+      return <p>Connecting wallet...</p>
+    }
+
+    if (!isConnected) {
+      return error ? <p className="error">{error}</p> : null
+    }
+
+    return null
+  }
+
   return (
     <>
       <MainLayout className="App">
-        <Center>
-          {!isConnected ? (
-            <>
-              <Button primary onClick={onConnect} loading={isConnecting}>
-                Connect
-              </Button>
-              {error ? <p className="error">{error}</p> : null}
-            </>
-          ) : (
-            <>
-              <Card>
-                <Header>Wallet</Header>
-                <p>
-                  <strong>Address:</strong>&nbsp;
-                  {address.slice(0, 6) + '...' + address.slice(-4)}
-                </p>
-              </Card>
-              <Card>
-                <Header>Balance</Header>
-                <p>
-                  <strong>DUMMY:</strong>&nbsp;
-                  {balance}
-                </p>
-              </Card>
-            </>
-          )}
-        </Center>
+        <Center>{renderContent()}</Center>
       </MainLayout>
-      <Footer />
     </>
   )
 }
