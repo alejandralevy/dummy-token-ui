@@ -1,8 +1,14 @@
 import { RootState } from '../types'
+import { createSelector } from 'reselect'
 
-export const getState = (state: RootState) => state.wallet
-export const getAddress = (state: RootState) => getState(state).address || ''
-export const isConnected = (state: RootState) => !!getAddress(state)
-export const isConnecting = (state: RootState) => getState(state).isConnecting
-export const getError = (state: RootState) => getState(state).error
-export const getBalance = (state: RootState) => getState(state).dummyBalance
+const getWalletState = (state: RootState) => state.wallet
+
+export const getAddress = createSelector([getWalletState], wallet => wallet.address || '')
+
+export const isConnected = createSelector([getAddress], address => !!address)
+
+export const isConnecting = createSelector([getWalletState], wallet => wallet.isConnecting)
+
+export const getError = createSelector([getWalletState], wallet => wallet.error)
+
+export const getBalance = createSelector([getWalletState], wallet => wallet.dummyBalance)
