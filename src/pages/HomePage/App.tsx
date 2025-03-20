@@ -20,7 +20,7 @@ const App: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, e
         <>
           <WalletInfo address={address} balance={balance} />
           <Button primary onClick={() => navigate('/transfer')}>
-            Refresh
+            Transfer Dummies
           </Button>
         </>
       )

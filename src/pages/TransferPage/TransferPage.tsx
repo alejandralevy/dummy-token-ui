@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import { Props } from './TransferPage.types'
-import { Center } from 'decentraland-ui'
+import { Button, Center, Field } from 'decentraland-ui'
 import WalletInfo from '../../components/WalletInfo'
 
 //TODO avoid code repetition
 const TransferPage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, error, balance }) => {
   useEffect(() => {
-    debugger
     if (!isConnected) {
       onConnect()
     }
@@ -14,7 +13,14 @@ const TransferPage: React.FC<Props> = ({ address, isConnected, onConnect, isConn
 
   const renderContent = () => {
     if (address && balance) {
-      return <WalletInfo address={address} balance={balance} />
+      return (
+        <>
+          <WalletInfo address={address} balance={balance} />
+          <Field label="Address" placeholder="0x..." />
+          <Field label="Amount" placeholder="10" type="number" />
+          <Button onClick={() => console.log('trasnferir')}>Transfer</Button>
+        </>
+      )
     }
 
     if (isConnecting) {
