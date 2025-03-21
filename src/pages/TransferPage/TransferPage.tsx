@@ -4,7 +4,15 @@ import { Button, Center, Field } from 'decentraland-ui'
 import WalletInfo from '../../components/WalletInfo'
 
 //TODO avoid code repetition
-const TransferPage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, error, balance }) => {
+const TransferPage: React.FC<Props> = ({
+  address,
+  isConnected,
+  onConnect,
+  isConnecting,
+  error,
+  balance,
+  onTransfer,
+}) => {
   useEffect(() => {
     if (!isConnected) {
       onConnect()
@@ -18,7 +26,9 @@ const TransferPage: React.FC<Props> = ({ address, isConnected, onConnect, isConn
           <WalletInfo address={address} balance={balance} />
           <Field label="Address" placeholder="0x..." />
           <Field label="Amount" placeholder="10" type="number" />
-          <Button onClick={() => console.log('trasnferir')}>Transfer</Button>
+          <Button primary onClick={() => onTransfer()}>
+            Transfer
+          </Button>
         </>
       )
     }

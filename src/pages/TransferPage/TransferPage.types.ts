@@ -8,8 +8,9 @@ export type Props = {
   error: string | null
   balance: string | null
   onConnect: () => void
+  onTransfer: () => void
 }
 
 export type MapStateProps = Pick<Props, 'address' | 'isConnected' | 'isConnecting' | 'error' | 'balance'>
-export type MapDispatchProps = Pick<Props, 'onConnect'>
+export type MapDispatchProps = Pick<Props, 'onConnect' | 'onTransfer'>
 export type MapDispatch = Dispatch<ConnectWalletRequestAction | AnyAction>

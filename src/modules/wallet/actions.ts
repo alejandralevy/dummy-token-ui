@@ -35,8 +35,8 @@ export function walletBalanceFailure(error: string) {
   return { type: GET_WALLET_BALANCE_FAILURE, payload: { error } }
 }
 
-export function transferDummyTokenRequest(address: string, amount: string) {
-  return { type: TRANSFER_DUMMY_TOKEN_REQUEST, payload: { address, amount } }
+export function transferDummyTokenRequest({ to, amount }: { to: string; amount: string }) {
+  return { type: TRANSFER_DUMMY_TOKEN_REQUEST, payload: { to, amount } }
 }
 
 export type ConnectWalletRequestAction = ReturnType<typeof connectWalletRequest>

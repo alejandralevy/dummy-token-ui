@@ -1,5 +1,5 @@
-import { ethers, formatUnits } from 'ethers'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { ethers, formatUnits, parseUnits } from 'ethers'
+import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { isErrorWithMessage } from '../utils'
 import {
   connectWalletFailure,
@@ -15,6 +15,7 @@ import {
 } from './actions'
 import { WindowWithEthereum } from './types'
 import { TOKEN_ADDRESS } from '../../env'
+import { getAddress } from './selectors'
 // The regular `window` object with `ethereum` injected by MetaMask
 const windowWithEthereum = window as unknown as WindowWithEthereum
 
@@ -61,4 +62,24 @@ export function* handleGetBalanceRequest(action: WalletBalanceRequestAction) {
   }
 }
 
-export function handleTransferDummyTokenRequest(action: TransferDummyTokenRequestAction) {}
+export function* handleTransferDummyTokenRequest(action: TransferDummyTokenRequestAction): Generator<any, void, any> {
+  try {
+    const { to, amount } = action.payload
+
+    const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
+    const signer = (yield call([provider, 'getSigner'])) as Awaited<ReturnType<typeof provider.getSigner>>
+    const token = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, signer)
+
+    const parsedAmount = parseUnits(amount, 0)
+
+    const tx = yield call(() => token.transfer(to, parsedAmount))
+    yield call([tx, 'wait'])
+
+    const senderAddress: string = yield select(getAddress)
+    yield put(walletBalanceRequest(senderAddress))
+    //yield put(transferTokenSuccess())
+  } catch (error) {
+    // yield put(transferTokenFailure(error instanceof Error ? error.message : 'Unknown error'))
+    console.log('Transfer error')
+  }
+}

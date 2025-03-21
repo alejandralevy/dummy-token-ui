@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { connectWalletRequest } from '../../modules/wallet/actions'
+import { connectWalletRequest, transferDummyTokenRequest } from '../../modules/wallet/actions'
 import { getAddress, getBalance, getError, isConnected, isConnecting } from '../../modules/wallet/selectors'
 import { RootState } from '../../modules/types'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './TransferPage.types.ts'
@@ -13,6 +13,12 @@ const mapState = (state: RootState): MapStateProps => ({
   balance: getBalance(state),
 })
 
-const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({ onConnect: () => dispatch(connectWalletRequest()) })
+const dummyAdress = '0x5fbdb2315678afecb367f032d93f642f64180aa3'
+const dummyAmount = '10'
+
+const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
+  onConnect: () => dispatch(connectWalletRequest()),
+  onTransfer: () => dispatch(transferDummyTokenRequest({ to: dummyAdress, amount: dummyAmount })),
+})
 
 export default connect(mapState, mapDispatch)(TransferPage)
