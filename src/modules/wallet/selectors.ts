@@ -13,5 +13,5 @@ export const isConnecting = createSelector([getWalletState], wallet => wallet.is
 export const getError = createSelector([getWalletState], wallet => wallet.error)
 
 export const getBalance = createSelector([getWalletState], wallet =>
-  formatUnits(wallet.dummyBalance as BigNumberish, 18)
+  formatUnits(wallet.dummyBalance as BigNumberish, 0)
 )

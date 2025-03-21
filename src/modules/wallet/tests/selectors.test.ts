@@ -35,7 +35,7 @@ it('should return the correct balance from the state', () => {
       address: '0xabc123',
       isConnecting: false,
       error: null,
-      dummyBalance: BigInt(4000000000000000000), // Balance guardado como BigInt
+      dummyBalance: BigInt(4), // balance en enteros, sin decimales
       isLoadingBalance: false,
       balanceError: null,
     },
@@ -43,5 +43,5 @@ it('should return the correct balance from the state', () => {
 
   const formattedBalance = getBalance(state)
 
-  expect(formattedBalance).toBe('4.0')
+  expect(formattedBalance).toBe('4')
 })
