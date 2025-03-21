@@ -65,7 +65,7 @@ export function* handleGetBalanceRequest(action: WalletBalanceRequestAction) {
 export function* handleTransferDummyTokenRequest(action: TransferDummyTokenRequestAction): Generator<any, void, any> {
   try {
     const { to, amount } = action.payload
-
+    debugger
     const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
     const signer = (yield call([provider, 'getSigner'])) as Awaited<ReturnType<typeof provider.getSigner>>
     const token = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, signer)

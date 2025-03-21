@@ -8,7 +8,7 @@ export type Props = {
   error: string | null
   balance: string | null
   onConnect: () => void
-  onTransfer: () => void
+  onTransfer: (params: { to: string; amount: string }) => void
 }
 
 export type MapStateProps = Pick<Props, 'address' | 'isConnected' | 'isConnecting' | 'error' | 'balance'>

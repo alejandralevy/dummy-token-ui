@@ -13,12 +13,9 @@ const mapState = (state: RootState): MapStateProps => ({
   balance: getBalance(state),
 })
 
-const dummyAdress = '0x5fbdb2315678afecb367f032d93f642f64180aa3'
-const dummyAmount = '10'
-
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onConnect: () => dispatch(connectWalletRequest()),
-  onTransfer: () => dispatch(transferDummyTokenRequest({ to: dummyAdress, amount: dummyAmount })),
+  onTransfer: ({ to, amount }) => dispatch(transferDummyTokenRequest({ to, amount })),
 })
 
 export default connect(mapState, mapDispatch)(TransferPage)

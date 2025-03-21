@@ -13,6 +13,8 @@ const TransferPage: React.FC<Props> = ({
   balance,
   onTransfer,
 }) => {
+  const [to, setTo] = React.useState('')
+  const [amount, setAmount] = React.useState('')
   useEffect(() => {
     if (!isConnected) {
       onConnect()
@@ -24,9 +26,9 @@ const TransferPage: React.FC<Props> = ({
       return (
         <>
           <WalletInfo address={address} balance={balance} />
-          <Field label="Address" placeholder="0x..." />
-          <Field label="Amount" placeholder="10" type="number" />
-          <Button primary onClick={() => onTransfer()}>
+          <Field label="Address" placeholder="0x..." onChange={event => setTo(event?.target.value)} />
+          <Field label="Amount" placeholder="10" type="number" onChange={event => setAmount(event?.target.value)} />
+          <Button primary onClick={() => onTransfer({ to, amount })}>
             Transfer
           </Button>
         </>
