@@ -7,6 +7,8 @@ export type WalletState = {
   dummyBalance: bigint | null
   isLoadingBalance: boolean
   balanceError: string | null
+  isTransferring: boolean
+  transferError: string | null
 }
 
 export type WindowWithEthereum = Window & { ethereum: ethers.Eip1193Provider }

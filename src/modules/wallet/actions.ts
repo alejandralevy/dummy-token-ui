@@ -7,6 +7,10 @@ export const GET_WALLET_BALANCE_REQUEST = '[Request] Get Wallet Balance'
 export const GET_WALLET_BALANCE_SUCCESS = '[Success] Get Wallet Balance'
 export const GET_WALLET_BALANCE_FAILURE = '[Failure] Get Wallet Balance'
 
+export const TRANSFER_DUMMY_TOKEN_REQUEST = '[Request] Transfer Dummy Token'
+export const TRANSFER_DUMMY_TOKEN_SUCCESS = '[Success] Transfer Dummy Token'
+export const TRANSFER_DUMMY_TOKEN_FAILURE = '[Failure] Transfer Dummy Token'
+
 export function connectWalletRequest() {
   return { type: CONNECT_WALLET_REQUEST, payload: {} }
 }
@@ -31,9 +35,14 @@ export function walletBalanceFailure(error: string) {
   return { type: GET_WALLET_BALANCE_FAILURE, payload: { error } }
 }
 
+export function transferDummyTokenRequest(address: string, amount: string) {
+  return { type: TRANSFER_DUMMY_TOKEN_REQUEST, payload: { address, amount } }
+}
+
 export type ConnectWalletRequestAction = ReturnType<typeof connectWalletRequest>
 export type ConnectWalletSuccessAction = ReturnType<typeof connectWalletSuccess>
 export type ConnectWalletFailureAction = ReturnType<typeof connectWalletFailure>
-export type WalletBalanceRequest = ReturnType<typeof walletBalanceRequest>
-export type WalletBalanceSuccess = ReturnType<typeof walletBalanceSuccess>
-export type WalletBalanceFailure = ReturnType<typeof walletBalanceFailure>
+export type WalletBalanceRequestAction = ReturnType<typeof walletBalanceRequest>
+export type WalletBalanceSuccessAction = ReturnType<typeof walletBalanceSuccess>
+export type WalletBalanceFailureAction = ReturnType<typeof walletBalanceFailure>
+export type TransferDummyTokenRequestAction = ReturnType<typeof transferDummyTokenRequest>

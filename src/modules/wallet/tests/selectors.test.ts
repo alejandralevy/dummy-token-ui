@@ -4,6 +4,7 @@ import { getBalance, isConnected } from '../selectors'
 describe('wallet selectors', () => {
   let baseState: RootState
 
+  //TODO extracte base state mock to another file
   beforeEach(() => {
     baseState = {
       wallet: {
@@ -13,6 +14,8 @@ describe('wallet selectors', () => {
         dummyBalance: BigInt(100),
         isLoadingBalance: false,
         balanceError: null,
+        isTransferring: false,
+        transferError: null,
       },
     }
   })
@@ -35,9 +38,11 @@ it('should return the correct balance from the state', () => {
       address: '0xabc123',
       isConnecting: false,
       error: null,
-      dummyBalance: BigInt(4), // balance en enteros, sin decimales
+      dummyBalance: BigInt(4),
       isLoadingBalance: false,
       balanceError: null,
+      isTransferring: false,
+      transferError: null,
     },
   }
 

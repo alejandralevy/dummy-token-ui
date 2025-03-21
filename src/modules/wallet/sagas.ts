@@ -7,9 +7,11 @@ import {
   CONNECT_WALLET_REQUEST,
   GET_WALLET_BALANCE_REQUEST,
   walletBalanceRequest,
-  WalletBalanceRequest,
+  WalletBalanceRequestAction,
   walletBalanceSuccess,
   walletBalanceFailure,
+  TRANSFER_DUMMY_TOKEN_REQUEST,
+  TransferDummyTokenRequestAction,
 } from './actions'
 import { WindowWithEthereum } from './types'
 import { TOKEN_ADDRESS } from '../../env'
@@ -31,6 +33,7 @@ export const TOKEN_ABI = [
 export function* walletSaga() {
   yield takeEvery(CONNECT_WALLET_REQUEST, handleConnectWalletRequest)
   yield takeEvery(GET_WALLET_BALANCE_REQUEST, handleGetBalanceRequest)
+  yield takeEvery(TRANSFER_DUMMY_TOKEN_REQUEST, handleTransferDummyTokenRequest)
 }
 
 export function* handleConnectWalletRequest() {
@@ -46,7 +49,7 @@ export function* handleConnectWalletRequest() {
   }
 }
 
-export function* handleGetBalanceRequest(action: WalletBalanceRequest) {
+export function* handleGetBalanceRequest(action: WalletBalanceRequestAction) {
   try {
     const address = action.payload
     const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
@@ -57,3 +60,5 @@ export function* handleGetBalanceRequest(action: WalletBalanceRequest) {
     yield put(walletBalanceFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
   }
 }
+
+export function handleTransferDummyTokenRequest(action: TransferDummyTokenRequestAction) {}
