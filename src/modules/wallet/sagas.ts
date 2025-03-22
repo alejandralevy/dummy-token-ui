@@ -77,9 +77,10 @@ export function* handleTransferDummyTokenRequest(action: TransferDummyTokenReque
 
     const senderAddress: string = yield select(getAddress)
     yield put(walletBalanceRequest(senderAddress))
+    //TODO add success and error actions
     //yield put(transferTokenSuccess())
   } catch (error) {
     // yield put(transferTokenFailure(error instanceof Error ? error.message : 'Unknown error'))
-    console.log('Transfer error')
+    console.log('Transfer error', error)
   }
 }
