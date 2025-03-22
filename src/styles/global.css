@@ -1,3 +1,4 @@
 .card.ui {
-  padding: 16px;
+  padding: 32px;
+  width: fit-content;
 }

@@ -1,22 +1,33 @@
 import React from 'react'
-import { Card, Header } from 'decentraland-ui'
+import { Card, CardMeta, Header, Icon, Row, Section } from 'decentraland-ui'
 import './index.css'
 
 type WalletInfoProps = { address: string; balance: string }
 
 const WalletInfo: React.FC<WalletInfoProps> = ({ address, balance }) => {
+  const handleCopy = () => {
+    navigator.clipboard.writeText(address)
+  }
   return (
-    <>
-      <Card className="card">
+    <div className="wallet-info">
+      <Card>
         <Header>Wallet</Header>
-        <strong>Address:</strong>&nbsp;
-        {address.slice(0, 6) + '...' + address.slice(-4)}
-        <p>
-          <strong>DUMMY:</strong>&nbsp;
-          {balance}
-        </p>
+        <CardMeta className="meta">
+          <Row>
+            {address}
+            <div className="icon-container" onClick={handleCopy}>
+              <Icon name="copy" className="copy-icon" />
+            </div>
+          </Row>
+        </CardMeta>
+        <Section size="tiny">
+          <Row className="balance-container">
+            <p className="wallet-balance">{balance}</p>
+            <p className="wallet-token">DUMMY</p>
+          </Row>
+        </Section>
       </Card>
-    </>
+    </div>
   )
 }
 

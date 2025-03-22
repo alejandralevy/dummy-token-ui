@@ -1,0 +1,33 @@
+.wallet-info {
+  .header {
+    margin-bottom: 0;
+  }
+
+  .copy-icon {
+    cursor: pointer;
+    color: white;
+    margin-left: 8px;
+  }
+
+  .copy-icon:hover {
+    color: grey;
+  }
+
+  .copy-button {
+    cursor: pointer;
+    color: white;
+    padding: 0;
+    width: 4px;
+  }
+
+  .wallet-balance {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .balance-container {
+    align-items: baseline;
+    gap: 8px;
+  }
+}
