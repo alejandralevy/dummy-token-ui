@@ -35,8 +35,16 @@ export function walletBalanceFailure(error: string) {
   return { type: GET_WALLET_BALANCE_FAILURE, payload: { error } }
 }
 
-export function transferDummyTokenRequest({ to, amount }: { to: string; amount: string }) {
-  return { type: TRANSFER_DUMMY_TOKEN_REQUEST, payload: { to, amount } }
+export function transferDummyTokenRequest({
+  to,
+  amount,
+  onSuccess,
+}: {
+  to: string
+  amount: string
+  onSuccess?: () => void
+}) {
+  return { type: TRANSFER_DUMMY_TOKEN_REQUEST, payload: { to, amount, onSuccess } }
 }
 
 export function transferDummyTokenSuccess() {

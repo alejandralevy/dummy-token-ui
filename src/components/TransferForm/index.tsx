@@ -1,17 +1,21 @@
 import React from 'react'
 
-import { Button, Center, Field, Input } from 'decentraland-ui'
+import { Button, Field, Input } from 'decentraland-ui'
 import { isValidAddress } from '../../modules/utils'
 
-type TransferFormProps = { balance: string; onTransfer: (params: { to: string; amount: string }) => void }
+type TransferFormProps = {
+  transferError: string | null
+  balance: string
+  onTransfer: (params: { to: string; amount: string }) => void
+}
 
-const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer }) => {
+const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transferError }) => {
   const [to, setTo] = React.useState('')
   const [amount, setAmount] = React.useState('')
   const [addressError, setAddressError] = React.useState(false)
   const [amountError, setAmountError] = React.useState(false)
   const [amountErrorMessage, setAmountErrorMessage] = React.useState('')
-  debugger
+
   const canTransfer = !!to && !!amount && !addressError && !amountError
   const addressErrorMessage = 'The address provided appears to be invalid. Please verify and try again.'
 
@@ -69,6 +73,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer }) => {
       <Button primary onClick={() => handleTransfer({ to, amount })} disabled={!canTransfer}>
         Transfer
       </Button>
+      {transferError && <p className="error">{transferError}</p>}
     </>
   )
 }

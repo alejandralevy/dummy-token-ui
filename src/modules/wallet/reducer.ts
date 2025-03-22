@@ -9,6 +9,8 @@ import {
   GET_WALLET_BALANCE_SUCCESS,
   GET_WALLET_BALANCE_FAILURE,
   TRANSFER_DUMMY_TOKEN_REQUEST,
+  TRANSFER_DUMMY_TOKEN_FAILURE,
+  TRANSFER_DUMMY_TOKEN_SUCCESS,
 } from './actions'
 import { WalletState } from './types'
 
@@ -20,7 +22,7 @@ const INITIAL_STATE: WalletState = {
   dummyBalance: BigInt(0),
   isLoadingBalance: false,
   balanceError: null,
-  isTransferring: false,
+  isTransfering: false,
   transferError: null,
 }
 
@@ -55,7 +57,16 @@ export function walletReducer(state: WalletState = INITIAL_STATE, action: AnyAct
     }
 
     case TRANSFER_DUMMY_TOKEN_REQUEST: {
-      return { ...state, isTransferring: true, transferError: null }
+      return { ...state, isTransfering: true, transferError: null }
+    }
+
+    case TRANSFER_DUMMY_TOKEN_FAILURE: {
+      const { error } = action.payload as ConnectWalletFailureAction['payload']
+      return { ...state, isTransfering: false, transferError: error }
+    }
+
+    case TRANSFER_DUMMY_TOKEN_SUCCESS: {
+      return { ...state, isTransfering: false, transferError: null }
     }
 
     default:

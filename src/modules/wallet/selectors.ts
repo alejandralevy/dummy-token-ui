@@ -15,3 +15,7 @@ export const getError = createSelector([getWalletState], wallet => wallet.error)
 export const getBalance = createSelector([getWalletState], wallet =>
   formatUnits(wallet.dummyBalance as BigNumberish, 0)
 )
+
+export const isTransfering = createSelector([getWalletState], wallet => wallet.isTransfering)
+
+export const getTransferError = createSelector([getWalletState], wallet => wallet.transferError)

@@ -14,7 +14,7 @@ describe('wallet selectors', () => {
         dummyBalance: BigInt(100),
         isLoadingBalance: false,
         balanceError: null,
-        isTransferring: false,
+        isTransfering: false,
         transferError: null,
       },
     }
@@ -41,7 +41,7 @@ it('should return the correct balance from the state', () => {
       dummyBalance: BigInt(4),
       isLoadingBalance: false,
       balanceError: null,
-      isTransferring: false,
+      isTransfering: false,
       transferError: null,
     },
   }

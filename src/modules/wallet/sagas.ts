@@ -1,4 +1,4 @@
-import { ethers, formatUnits, parseUnits } from 'ethers'
+import { ethers, parseUnits } from 'ethers'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { isErrorWithMessage } from '../utils'
 import {
@@ -13,6 +13,7 @@ import {
   TRANSFER_DUMMY_TOKEN_REQUEST,
   TransferDummyTokenRequestAction,
   transferDummyTokenFailure,
+  transferDummyTokenSuccess,
 } from './actions'
 import { WindowWithEthereum } from './types'
 import { TOKEN_ADDRESS } from '../../env'
@@ -65,8 +66,8 @@ export function* handleGetBalanceRequest(action: WalletBalanceRequestAction) {
 
 export function* handleTransferDummyTokenRequest(action: TransferDummyTokenRequestAction): Generator<any, void, any> {
   try {
-    const { to, amount } = action.payload
-    debugger
+    const { to, amount, onSuccess } = action.payload
+
     const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
     const signer = (yield call([provider, 'getSigner'])) as Awaited<ReturnType<typeof provider.getSigner>>
     const token = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, signer)
@@ -77,6 +78,8 @@ export function* handleTransferDummyTokenRequest(action: TransferDummyTokenReque
 
     const senderAddress: string = yield select(getAddress)
     yield put(walletBalanceRequest(senderAddress))
+    yield put(transferDummyTokenSuccess())
+    !!onSuccess && onSuccess()
   } catch (error) {
     yield put(
       transferDummyTokenFailure(error instanceof Error ? error.message : 'There was an error transferring the token')
