@@ -1,4 +1,4 @@
-import { Button } from 'decentraland-ui'
+import { Button, Center, Row } from 'decentraland-ui'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,14 +6,19 @@ const TransferSuccessPage: React.FC = () => {
   const navigate = useNavigate()
 
   return (
-    <div>
-      <h1>Transfer Success</h1>
-      <Button primary onClick={() => navigate('/')}>
-        Go back to Wallet
-      </Button>
-      <Button secondary onClick={() => navigate('/transfer')}>
-        Make another transfer
-      </Button>
+    <div className="transfer-success-page">
+      <Center>
+        <h1>You've successfully transfered Dummies!</h1>
+        <p>What about now?</p>
+        <Row grow={false} shrink={false}>
+          <Button secondary onClick={() => navigate('/')}>
+            Back to Wallet
+          </Button>
+          <Button primary onClick={() => navigate('/transfer')}>
+            Another transfer
+          </Button>
+        </Row>
+      </Center>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Button, Column, Field, Input } from 'decentraland-ui'
 import { isValidAddress } from '../../modules/utils'
+import './index.css'
 
 type TransferFormProps = {
   transferError: string | null
@@ -17,7 +18,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
   const [amountErrorMessage, setAmountErrorMessage] = React.useState('')
 
   const canTransfer = !!to && !!amount && !addressError && !amountError
-  const addressErrorMessage = 'The address provided appears to be invalid. Please verify and try again.'
+  const addressErrorMessage = 'Invalid address. Please verify and try again.'
 
   const handleAmountChange = (amount: string) => {
     setAmount(amount)
@@ -45,8 +46,8 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
   }
 
   return (
-    <>
-      <Column>
+    <div className="transfer-form">
+      <Column className="form-container">
         <Field
           label="Address"
           error={addressError}
@@ -78,7 +79,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
         </Button>
         {transferError && <p className="error">{transferError}</p>}
       </Column>
-    </>
+    </div>
   )
 }
 

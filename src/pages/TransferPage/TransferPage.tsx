@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Props } from './TransferPage.types'
-import { Button, Center, Column, Icon, Row } from 'decentraland-ui'
-import './index.css'
+import { Button, Center, Column, Icon, Loader, Row } from 'decentraland-ui'
 import WalletInfo from '../../components/WalletInfo'
 
 import TransferForm from '../../components/TransferForm'
@@ -38,7 +37,9 @@ const TransferPage: React.FC<Props> = ({
 
   const renderContent = () => {
     if (isTransfering) {
-      return <p>Transfering tokens, please confirm the transaction on your Wallet</p>
+      return (
+        <Loader active size="massive" content="Transfering tokens, please confirm the transaction on your Wallet." />
+      )
     }
 
     if (address && balance) {

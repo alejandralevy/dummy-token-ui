@@ -1,0 +1,15 @@
+.transfer-form {
+  width: 100%;
+  .field {
+    width: 100%;
+  }
+
+  .message {
+    width: 100%;
+    line-break: auto;
+  }
+
+  .form-container {
+    gap: 8px;
+  }
+}

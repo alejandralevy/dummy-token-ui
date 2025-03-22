@@ -23,7 +23,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ address, balance }) => {
         <Section size="tiny">
           <Row className="balance-container">
             <p className="wallet-balance">{balance}</p>
-            <p className="wallet-token">DUMMY</p>
+            <p className="wallet-token">DUMMIES</p>
           </Row>
         </Section>
       </Card>
