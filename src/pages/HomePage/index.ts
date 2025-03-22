@@ -1,2 +1,2 @@
-import App from './App.container'
-export { App }
+import HomePage from './HomePage.container'
+export { HomePage }

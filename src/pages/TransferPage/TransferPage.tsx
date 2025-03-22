@@ -24,16 +24,6 @@ const TransferPage: React.FC<Props> = ({
     }
   }, [])
 
-  useEffect(() => {
-    if (!isTransfering) {
-      if (!!transferError) {
-        console.log('There was an error while transferring')
-      } else {
-        console.log('Transfer was successful')
-      }
-    }
-  }, [isTransfering, transferError])
-
   const handleTransfer = (params: { to: string; amount: string }) => {
     try {
       onTransfer({

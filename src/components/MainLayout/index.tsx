@@ -4,8 +4,8 @@ import { Navbar, Page, Footer } from 'decentraland-ui'
 const MainLayout = () => {
   return (
     <>
-      <Navbar activePage="Wallet" />
-      <Page className="App">
+      <Navbar activePage="wallet" />
+      <Page>
         <Outlet />
       </Page>
       <Footer />
