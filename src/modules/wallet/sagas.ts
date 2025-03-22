@@ -12,6 +12,7 @@ import {
   walletBalanceFailure,
   TRANSFER_DUMMY_TOKEN_REQUEST,
   TransferDummyTokenRequestAction,
+  transferDummyTokenFailure,
 } from './actions'
 import { WindowWithEthereum } from './types'
 import { TOKEN_ADDRESS } from '../../env'
@@ -71,16 +72,14 @@ export function* handleTransferDummyTokenRequest(action: TransferDummyTokenReque
     const token = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, signer)
 
     const parsedAmount = parseUnits(amount, 0)
-
     const tx = yield call(() => token.transfer(to, parsedAmount))
     yield call([tx, 'wait'])
 
     const senderAddress: string = yield select(getAddress)
     yield put(walletBalanceRequest(senderAddress))
-    //TODO add success and error actions
-    //yield put(transferTokenSuccess())
   } catch (error) {
-    // yield put(transferTokenFailure(error instanceof Error ? error.message : 'Unknown error'))
-    console.log('Transfer error', error)
+    yield put(
+      transferDummyTokenFailure(error instanceof Error ? error.message : 'There was an error transferring the token')
+    )
   }
 }

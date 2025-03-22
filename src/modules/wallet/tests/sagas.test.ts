@@ -1,23 +1,34 @@
 import { expectSaga } from 'redux-saga-test-plan'
-import { handleConnectWalletRequest, handleGetBalanceRequest } from '../sagas'
+import { handleConnectWalletRequest, handleGetBalanceRequest, handleTransferDummyTokenRequest } from '../sagas'
 import {
   connectWalletFailure,
   connectWalletSuccess,
   walletBalanceFailure,
   walletBalanceRequest,
   walletBalanceSuccess,
+  transferDummyTokenRequest,
+  transferDummyTokenFailure,
 } from '../actions'
 import { ethers } from 'ethers'
 
 jest.mock('ethers', () => {
   const balanceOfMock = jest.fn().mockResolvedValue(BigInt(4000000000000000000))
+  const transferMock = jest.fn().mockResolvedValue({ wait: jest.fn() })
+  const getAddressMock = jest.fn().mockResolvedValue('0xabc123')
+
+  class MockSigner {
+    getAddress = getAddressMock
+  }
+
+  class MockBrowserProvider {
+    send = jest.fn()
+    getSigner = jest.fn(() => new MockSigner())
+  }
 
   const mock = {
-    Contract: jest.fn(() => ({ balanceOf: balanceOfMock })),
-    BrowserProvider: jest.fn(() => ({
-      send: jest.fn(),
-      getSigner: jest.fn(() => ({ getAddress: jest.fn(() => '0xabc123') })),
-    })),
+    Contract: jest.fn(() => ({ balanceOf: balanceOfMock, transfer: transferMock })),
+    BrowserProvider: MockBrowserProvider,
+    parseUnits: jest.fn(() => BigInt(10)),
   }
 
   return { __esModule: true, ...mock, ethers: mock }
@@ -30,7 +41,6 @@ describe('handleGetBalanceRequest', () => {
     const testAddress = '0xabc123'
     return expectSaga(handleGetBalanceRequest, walletBalanceRequest(testAddress))
       .put(walletBalanceSuccess(BigInt(4000000000000000000)))
-
       .run()
   })
 
@@ -59,12 +69,51 @@ describe('handleConnectWalletRequest', () => {
   it('should dispatch connectWalletFailure when provider.send fails', () => {
     const errorMessage = 'failed to connect'
 
-    ;(ethers.BrowserProvider as jest.Mock).mockImplementation(() => ({
+    const originalBrowserProvider = ethers.BrowserProvider
+
+    const FailingProvider = jest.fn(() => ({
       send: jest.fn(() => {
         throw new Error(errorMessage)
       }),
     }))
 
-    return expectSaga(handleConnectWalletRequest).put(connectWalletFailure(errorMessage)).run()
+    ;(ethers as any).BrowserProvider = FailingProvider
+
+    return expectSaga(handleConnectWalletRequest)
+      .put(connectWalletFailure(errorMessage))
+      .run()
+      .finally(() => {
+        ;(ethers as any).BrowserProvider = originalBrowserProvider
+      })
+  })
+})
+
+describe('handleTransferDummyTokenRequest', () => {
+  const action = transferDummyTokenRequest({ to: '0xReceiverAddress', amount: '10' })
+
+  it('should handle a successful token transfer', () => {
+    return expectSaga(handleTransferDummyTokenRequest, action)
+      .withState({ wallet: { address: '0xabc123' } })
+      .put(walletBalanceRequest('0xabc123'))
+      .run()
+  })
+
+  it('should dispatch transferDummyTokenFailure on error', () => {
+    const errorMessage = 'Transfer failed'
+    const original = ethers.Contract
+
+    ;(ethers as any).Contract = jest.fn(() => ({
+      transfer: () => {
+        throw new Error(errorMessage)
+      },
+    }))
+
+    return expectSaga(handleTransferDummyTokenRequest, action)
+      .withState({ wallet: { address: '0xabc123' } })
+      .put(transferDummyTokenFailure(errorMessage))
+      .run()
+      .finally(() => {
+        ;(ethers as any).Contract = original
+      })
   })
 })

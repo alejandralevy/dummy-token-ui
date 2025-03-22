@@ -39,6 +39,14 @@ export function transferDummyTokenRequest({ to, amount }: { to: string; amount: 
   return { type: TRANSFER_DUMMY_TOKEN_REQUEST, payload: { to, amount } }
 }
 
+export function transferDummyTokenSuccess() {
+  return { type: TRANSFER_DUMMY_TOKEN_SUCCESS, payload: {} }
+}
+
+export function transferDummyTokenFailure(error: string) {
+  return { type: TRANSFER_DUMMY_TOKEN_FAILURE, payload: { error } }
+}
+
 export type ConnectWalletRequestAction = ReturnType<typeof connectWalletRequest>
 export type ConnectWalletSuccessAction = ReturnType<typeof connectWalletSuccess>
 export type ConnectWalletFailureAction = ReturnType<typeof connectWalletFailure>
@@ -46,3 +54,5 @@ export type WalletBalanceRequestAction = ReturnType<typeof walletBalanceRequest>
 export type WalletBalanceSuccessAction = ReturnType<typeof walletBalanceSuccess>
 export type WalletBalanceFailureAction = ReturnType<typeof walletBalanceFailure>
 export type TransferDummyTokenRequestAction = ReturnType<typeof transferDummyTokenRequest>
+export type TransferDummyTokenSuccessAction = ReturnType<typeof transferDummyTokenSuccess>
+export type TransferDummyTokenFailureAction = ReturnType<typeof transferDummyTokenFailure>
