@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Props } from './TransferPage.types'
-import { Center } from 'decentraland-ui'
+import { Button, Center, Column, Icon, Row } from 'decentraland-ui'
+import './index.css'
 import WalletInfo from '../../components/WalletInfo'
 
 import TransferForm from '../../components/TransferForm'
@@ -42,10 +43,14 @@ const TransferPage: React.FC<Props> = ({
 
     if (address && balance) {
       return (
-        <>
+        <Column>
+          <Button basic onClick={() => navigate('/')}>
+            <Icon name="arrow left" />
+            Go back to wallet
+          </Button>
           <WalletInfo address={address} balance={balance} />
           <TransferForm balance={balance} onTransfer={handleTransfer} transferError={transferError} />
-        </>
+        </Column>
       )
     }
 
@@ -61,9 +66,9 @@ const TransferPage: React.FC<Props> = ({
   }
 
   return (
-    <>
-      <Center>{renderContent()}</Center>
-    </>
+    <div>
+      <Center className="transfer-page">{renderContent()}</Center>
+    </div>
   )
 }
 

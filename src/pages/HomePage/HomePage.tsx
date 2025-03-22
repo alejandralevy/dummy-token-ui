@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Center } from 'decentraland-ui'
+import { Button, Center, Column, Icon } from 'decentraland-ui'
 import { useNavigate } from 'react-router-dom'
 import { Props } from './HomePage.types'
 import WalletInfo from '../../components/WalletInfo'
@@ -15,12 +15,13 @@ const HomePage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecti
   const renderContent = () => {
     if (address && balance) {
       return (
-        <>
+        <Column>
           <WalletInfo address={address} balance={balance} />
           <Button primary onClick={() => navigate('/transfer')}>
-            Transfer Dummies
+            <Icon name="send" />
+            Transfer
           </Button>
-        </>
+        </Column>
       )
     }
 

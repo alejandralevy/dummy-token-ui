@@ -1,4 +1,6 @@
 .wallet-info {
+  margin-bottom: 24px;
+
   .header {
     margin-bottom: 0;
   }
@@ -29,5 +31,9 @@
   .balance-container {
     align-items: baseline;
     gap: 8px;
+  }
+
+  .balance-card {
+    margin-bottom: 16px;
   }
 }

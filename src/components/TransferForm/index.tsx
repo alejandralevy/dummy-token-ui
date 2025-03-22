@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Field, Input } from 'decentraland-ui'
+import { Button, Column, Field, Input } from 'decentraland-ui'
 import { isValidAddress } from '../../modules/utils'
 
 type TransferFormProps = {
@@ -46,34 +46,38 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
 
   return (
     <>
-      <Field
-        label="Address"
-        error={addressError}
-        message={addressError ? addressErrorMessage : ''}
-        placeholder="0x..."
-        focus
-        value={to}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleAddressChange(event?.target.value)}
-        maxLength={42}
-        input={<Input onBlur={(event: React.FocusEvent<HTMLInputElement>) => handleAddressBlur(event.target.value)} />}
-      />
-      <Field
-        label="Amount"
-        placeholder="25"
-        error={amountError}
-        message={amountError ? amountErrorMessage : ''}
-        input={
-          <Input
-            type="number"
-            onBlur={(event: React.FocusEvent<HTMLInputElement>) => handleAmountChange(event.target.value)}
-          />
-        }
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleAmountChange(event?.target.value)}
-      />
-      <Button primary onClick={() => handleTransfer({ to, amount })} disabled={!canTransfer}>
-        Transfer
-      </Button>
-      {transferError && <p className="error">{transferError}</p>}
+      <Column>
+        <Field
+          label="Address"
+          error={addressError}
+          message={addressError ? addressErrorMessage : ''}
+          placeholder="0x..."
+          focus
+          value={to}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleAddressChange(event?.target.value)}
+          maxLength={42}
+          input={
+            <Input onBlur={(event: React.FocusEvent<HTMLInputElement>) => handleAddressBlur(event.target.value)} />
+          }
+        />
+        <Field
+          label="Amount"
+          placeholder="25"
+          error={amountError}
+          message={amountError ? amountErrorMessage : ''}
+          input={
+            <Input
+              type="number"
+              onBlur={(event: React.FocusEvent<HTMLInputElement>) => handleAmountChange(event.target.value)}
+            />
+          }
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleAmountChange(event?.target.value)}
+        />
+        <Button primary onClick={() => handleTransfer({ to, amount })} disabled={!canTransfer}>
+          Transfer
+        </Button>
+        {transferError && <p className="error">{transferError}</p>}
+      </Column>
     </>
   )
 }
