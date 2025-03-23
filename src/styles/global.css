@@ -3,6 +3,11 @@
   width: fit-content;
 }
 
+.ui.loader.text {
+  line-height: 28px;
+  font-size: 20px;
+}
+
 h1 {
   font-size: 24px;
 }

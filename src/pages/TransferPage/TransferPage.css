@@ -1,0 +1,5 @@
+.transfer-page {
+  .transfer-container {
+    max-width: min-content;
+  }
+}

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { Props } from './TransferPage.types'
-import { Button, Center, Column, Icon, Loader, Row } from 'decentraland-ui'
+import { Button, Center, Column, Icon, Loader } from 'decentraland-ui'
 import WalletInfo from '../../components/WalletInfo'
+import './TransferPage.css'
 
 import TransferForm from '../../components/TransferForm'
 import { useNavigate } from 'react-router-dom'
@@ -44,7 +45,7 @@ const TransferPage: React.FC<Props> = ({
 
     if (address && balance) {
       return (
-        <Column>
+        <Column className="transfer-container">
           <Button basic onClick={() => navigate('/')}>
             <Icon name="arrow left" />
             Go back to wallet

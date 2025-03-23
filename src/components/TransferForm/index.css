@@ -12,4 +12,9 @@
   .form-container {
     gap: 8px;
   }
+
+  .error-message {
+    width: 100%;
+    line-break: auto;
+  }
 }

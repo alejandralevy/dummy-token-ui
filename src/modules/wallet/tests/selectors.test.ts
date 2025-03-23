@@ -4,7 +4,7 @@ import { getBalance, isConnected } from '../selectors'
 describe('wallet selectors', () => {
   let baseState: RootState
 
-  //TODO extracte base state mock to another file
+  //TODO extract base state mock to another file
   beforeEach(() => {
     baseState = {
       wallet: {

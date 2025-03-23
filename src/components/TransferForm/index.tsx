@@ -47,7 +47,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
 
   return (
     <div className="transfer-form">
-      <Column className="form-container">
+      <Column className="form-container" shrink>
         <Field
           label="Address"
           error={addressError}
@@ -77,7 +77,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
         <Button primary onClick={() => handleTransfer({ to, amount })} disabled={!canTransfer}>
           Transfer
         </Button>
-        {transferError && <p className="error">{transferError}</p>}
+        {transferError && <p className="error-message">{transferError}</p>}
       </Column>
     </div>
   )
