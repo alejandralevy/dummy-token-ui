@@ -6,6 +6,8 @@ import './TransferPage.css'
 
 import TransferForm from '../../components/TransferForm'
 import { useNavigate } from 'react-router-dom'
+import ConnectingWalletLoader from '../../components/ConnectingWalletLoader'
+import ConnectionError from '../../components/ConnectionError'
 
 const TransferPage: React.FC<Props> = ({
   address,
@@ -43,6 +45,14 @@ const TransferPage: React.FC<Props> = ({
       )
     }
 
+    if (isConnecting) {
+      return <ConnectingWalletLoader />
+    }
+
+    if (!isConnected) {
+      return <ConnectionError error={error} onRetry={onConnect} />
+    }
+
     if (address && balance) {
       return (
         <Column className="transfer-container">
@@ -55,23 +65,9 @@ const TransferPage: React.FC<Props> = ({
         </Column>
       )
     }
-
-    if (isConnecting) {
-      return <p>Connecting wallet...</p>
-    }
-
-    if (!isConnected) {
-      return error ? <p className="error">{error}</p> : null
-    }
-
-    return null
   }
 
-  return (
-    <div>
-      <Center className="transfer-page">{renderContent()}</Center>
-    </div>
-  )
+  return <Center className="transfer-page">{renderContent()}</Center>
 }
 
 export default TransferPage

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Props } from './HomePage.types'
 import WalletInfo from '../../components/WalletInfo'
 import ConnectionError from '../../components/ConnectionError'
+import ConnectingWalletLoader from '../../components/ConnectingWalletLoader'
 
 const HomePage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, error, balance }) => {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ const HomePage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecti
 
   const renderContent = () => {
     if (isConnecting) {
-      return <Loader active size="massive" content="We are connecting your wallet, please hold on." />
+      return <ConnectingWalletLoader />
     }
 
     if (!isConnected) {

@@ -77,7 +77,9 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
         <Button primary onClick={() => handleTransfer({ to, amount })} disabled={!canTransfer}>
           Transfer
         </Button>
-        {transferError && <p className="error-message">{transferError}</p>}
+        {transferError && (
+          <p className="error-message">There was an error on the transfer, please try again ({transferError})</p>
+        )}
       </Column>
     </div>
   )
