@@ -1,6 +1,6 @@
 import { ethers, parseUnits } from 'ethers'
-import { call, put, select, takeEvery } from 'redux-saga/effects'
-import { isErrorWithMessage } from '../utils'
+import { call, delay, put, select, takeEvery } from 'redux-saga/effects'
+import { getErrorMessage, isErrorWithMessage } from '../utils'
 import {
   connectWalletFailure,
   connectWalletSuccess,
@@ -41,6 +41,7 @@ export function* walletSaga() {
 
 export function* handleConnectWalletRequest() {
   try {
+    yield delay(3000)
     const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
     yield call([provider, 'send'], 'eth_requestAccounts', []) as Awaited<ReturnType<typeof provider.send>>
     const signer = (yield call([provider, 'getSigner'])) as Awaited<ReturnType<typeof provider.getSigner>>
@@ -48,7 +49,7 @@ export function* handleConnectWalletRequest() {
     yield put(connectWalletSuccess(address))
     yield put(walletBalanceRequest(address))
   } catch (error) {
-    yield put(connectWalletFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
+    yield put(connectWalletFailure(getErrorMessage(error)))
   }
 }
 
@@ -60,7 +61,7 @@ export function* handleGetBalanceRequest(action: WalletBalanceRequestAction) {
     const balance: bigint = yield call(() => token.balanceOf(address))
     yield put(walletBalanceSuccess(balance))
   } catch (error) {
-    yield put(walletBalanceFailure(isErrorWithMessage(error) ? error.message : 'Unknown error'))
+    yield put(walletBalanceFailure(getErrorMessage(error)))
   }
 }
 
@@ -81,8 +82,6 @@ export function* handleTransferDummyTokenRequest(action: TransferDummyTokenReque
     yield put(transferDummyTokenSuccess())
     !!onSuccess && onSuccess()
   } catch (error) {
-    yield put(
-      transferDummyTokenFailure(error instanceof Error ? error.message : 'There was an error transferring the token')
-    )
+    yield put(transferDummyTokenFailure(getErrorMessage(error)))
   }
 }

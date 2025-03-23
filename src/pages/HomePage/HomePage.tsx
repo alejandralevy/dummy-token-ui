@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import { Button, Center, Column, Icon } from 'decentraland-ui'
+import { Button, Center, Column, Icon, Loader } from 'decentraland-ui'
 import { useNavigate } from 'react-router-dom'
 import { Props } from './HomePage.types'
 import WalletInfo from '../../components/WalletInfo'
+import ConnectionError from '../../components/ConnectionError'
 
 const HomePage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, error, balance }) => {
   const navigate = useNavigate()
@@ -13,27 +14,23 @@ const HomePage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecti
   }, [])
 
   const renderContent = () => {
-    if (address && balance) {
-      return (
-        <Column>
-          <WalletInfo address={address} balance={balance} />
-          <Button primary onClick={() => navigate('/transfer')}>
-            <Icon name="send" />
-            Transfer
-          </Button>
-        </Column>
-      )
-    }
-
     if (isConnecting) {
-      return <p>Connecting wallet...</p>
+      return <Loader active size="massive" content="We are connecting your wallet, please hold on." />
     }
 
     if (!isConnected) {
-      return error ? <p className="error">{error}</p> : null
+      return <ConnectionError error={error} onRetry={onConnect} />
     }
 
-    return null
+    return (
+      <Column>
+        <WalletInfo address={address} balance={balance} />
+        <Button primary onClick={() => navigate('/transfer')} disabled={isConnecting || !isConnected}>
+          <Icon name="send" />
+          Transfer
+        </Button>
+      </Column>
+    )
   }
 
   return (

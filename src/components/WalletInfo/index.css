@@ -36,4 +36,7 @@
   .balance-card {
     margin-bottom: 16px;
   }
+  .wallet-token {
+    font-size: 12px;
+  }
 }
