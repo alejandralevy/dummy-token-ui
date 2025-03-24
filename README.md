@@ -1,30 +1,110 @@
-# Dummy Token UI
+# 💸 Dummy Token UI + Smart Contract
 
-A simple UI for a [Dummy Token](https://github.com/decentraland/dummy-token). This frontend allows the user to connect their wallet and see their address. It is built using `react` + `redux` + `redux-saga`.
+A simple dApp to connect your wallet, view your balance, and transfer a custom dummy token — built in using a dummy token contract provided by Decentraland + Decentraland UI.
 
-# Directory structure and standards
+This repo includes both the UI and the dummy token contract to help you run everything locally faster 🚀
 
-The repository splits the `redux` logic into `modules`, which contain all the actions/sagas/reducer/selectors for a specific domain. The `react` components can be found under the `components` directory, each component has its own directory which contains always a `.tsx` file with the component itself and a `.css` file with its styles. The components are always pure, and if they need to be connected to the redux store it is done by wrapping it with a `.container.ts` file that maps the necessary properties and callbacks to extract the data from the store and dispatch the required actions.
+## ⚙️ Step 1: Run the Token Contract Locally
 
-# Task
+### 1.1. Install dependencies
 
-The current state of the frontend allows the user to connect their wallet and see their address. Your task is add the following features:
+```bash
+cd dummy-ui/dummy-token
+npm install
+```
 
-- Allow the user to see their Dummy Token balance once their wallet is connected
-- Allow the user to transfer Dummy Tokens
+### 1.2. Start the local Ethereum node
 
-To achieve this you will need to modify the existing redux module and/or add new ones, also you will need to adapt the react components to allow the user to fullfil all the necessary requirements by modifying the existing components/containers and/or adding new ones as well.
+```bash
+npx hardhat node --hostname 0.0.0.0
+```
 
-You will need to make use of `decentraland-ui` components to build the missing parts of the frontend. You can see examples of the available components here: [Decentraland UI](https://ui.decentraland.org/).
+### 1.3. Deploy the contract
 
-The final state of the frontend should look something like this:
+In another terminal:
 
-![Screencast](https://user-images.githubusercontent.com/2781777/115337070-bf24b980-a176-11eb-89e5-d4690893271a.gif)
+```bash
+npx hardhat --network localhost run scripts/deploy.js
+```
 
-## Setup
+Copy the token address printed in the console — e.g.:
 
-1. Run `cp .env.example .env` and fill the environment variables
-2. Run `npm install`
-3. Run `npm start`
+```
+Token deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+```
 
-You will also need to setup a local ethereum development environment and deploy the Dummy Token there, to do that [follow these instructions](https://github.com/decentraland/dummy-token#setup).
+### 1.4. Use the faucet to get tokens and ETH
+
+```bash
+npx hardhat --network localhost faucet <token-address> <your-metamask-address>
+```
+
+✅ Replace:
+
+- `<token-address>` with the one from the previous step
+- `<your-metamask-address>` with your wallet address
+
+---
+
+## 🔌 Step 2: Connect MetaMask to Localhost
+
+1. Open MetaMask → Settings → Networks → **Add Network**
+2. Fill in:
+   - **Network Name**: `Localhost 8545`
+   - **New RPC URL**: `http://localhost:8545`
+   - **Chain ID**: `31337`
+   - **Currency Symbol**: `ETH`
+3. Save and switch to this network
+
+📸 _Image placeholder — add screenshot here_
+
+---
+
+## 🪙 Step 3: Add the Dummy Token to MetaMask
+
+1. In MetaMask, click **Import Tokens**
+2. Paste the token address from step 1.3
+3. Click **Add Custom Token** and confirm
+
+📸 _Image placeholder — add screenshot here_
+
+---
+
+## 🖥️ Step 4: Run the Frontend
+
+### 4.1. Configure environment variables
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and paste your deployed token address:
+
+```env
+VITE_TOKEN_ADDRESS=0xYourTokenAddressHere
+```
+
+### 4.2. Install and run the app
+
+```bash
+npm install
+npm start
+```
+
+Visit 👉 [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🦊 Need a Wallet?
+
+Create a MetaMask wallet in just a few steps:
+
+1. Go to [metamask.io](https://metamask.io/) and install the extension
+2. Click **Create a wallet**
+3. Choose a password
+4. Save your recovery phrase somewhere safe
+5. Done! You're ready to go 🎉
+
+---
+
+Feel free to fork or adapt this for your own Web3 projects 💻✨
