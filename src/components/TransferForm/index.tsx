@@ -50,6 +50,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
       <Column className="form-container" shrink>
         <Field
           label="Address"
+          data-testid="address-input"
           error={addressError}
           message={addressError ? addressErrorMessage : ''}
           placeholder="0x..."
@@ -63,6 +64,7 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
         />
         <Field
           label="Amount"
+          data-testid="amount-input"
           placeholder="25"
           error={amountError}
           message={amountError ? amountErrorMessage : ''}
@@ -74,11 +76,18 @@ const TransferForm: React.FC<TransferFormProps> = ({ balance, onTransfer, transf
           }
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleAmountChange(event?.target.value)}
         />
-        <Button primary onClick={() => handleTransfer({ to, amount })} disabled={!canTransfer}>
+        <Button
+          primary
+          onClick={() => handleTransfer({ to, amount })}
+          disabled={!canTransfer}
+          data-testid="transfer-button"
+        >
           Transfer
         </Button>
         {transferError && (
-          <p className="error-message">There was an error on the transfer, please try again ({transferError})</p>
+          <p className="error-message" data-testid="transfer-error-message">
+            There was an error on the transfer, please try again ({transferError})
+          </p>
         )}
       </Column>
     </div>
