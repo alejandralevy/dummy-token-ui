@@ -9,7 +9,7 @@ This repo includes both the UI and the dummy token contract to help you run ever
 ### 1.1. Install dependencies
 
 ```bash
-cd dummy-ui/dummy-token
+cd dummy-token-ui/dummy-token
 npm install
 ```
 
@@ -18,6 +18,7 @@ npm install
 ```bash
 npx hardhat node --hostname 0.0.0.0
 ```
+Keep this terminal open!
 
 ### 1.3. Deploy the contract
 
@@ -29,11 +30,9 @@ npx hardhat --network localhost run scripts/deploy.js
 
 Copy the token address printed in the console — e.g.:
 
-```
-Token deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
-```
+<img width="877" alt="Screenshot 2025-03-24 at 16 09 35" src="https://github.com/user-attachments/assets/185d7d85-066e-4b5e-8d64-a901a6533dae" />
 
-### 1.4. Use the faucet to get tokens and ETH
+### 1.4. Use the faucet to add ETH and DUMMY tokens to your wallet
 
 ```bash
 npx hardhat --network localhost faucet <token-address> <your-metamask-address>
@@ -43,6 +42,8 @@ npx hardhat --network localhost faucet <token-address> <your-metamask-address>
 
 - `<token-address>` with the one from the previous step
 - `<your-metamask-address>` with your wallet address
+
+ℹ️ Do you need a wallet? Go to the end of the file and I explain you how to get one, it's very easy :)
 
 ---
 
@@ -107,4 +108,4 @@ Create a MetaMask wallet in just a few steps:
 
 ---
 
-Feel free to fork or adapt this for your own Web3 projects 💻✨
+Feel free to reach me in case of any issues or doubts to: alelevy15@gmail.com 💻✨
