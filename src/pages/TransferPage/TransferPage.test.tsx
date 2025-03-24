@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import TransferPage from './TransferPage'
+import { ROUTES } from '../../constants/routes'
 
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({ ...jest.requireActual('react-router-dom'), useNavigate: () => mockNavigate }))
@@ -59,6 +60,6 @@ describe('TransferPage', () => {
     const backButton = screen.getByRole('button', { name: /go back to wallet/i })
     fireEvent.click(backButton)
 
-    expect(mockNavigate).toHaveBeenCalledWith('/')
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.HOME)
   })
 })

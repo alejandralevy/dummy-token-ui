@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import HomePage from './HomePage'
+import { ROUTES } from '../../constants/routes'
 
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({ ...jest.requireActual('react-router-dom'), useNavigate: () => mockNavigate }))
@@ -46,6 +47,6 @@ describe('HomePage', () => {
     render(<HomePage {...baseProps} address="0xabc123" isConnected={true} />, { wrapper: MemoryRouter })
     const button = screen.getByRole('button', { name: /transfer/i })
     fireEvent.click(button)
-    expect(mockNavigate).toHaveBeenCalledWith('/transfer')
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.TRANSFER)
   })
 })

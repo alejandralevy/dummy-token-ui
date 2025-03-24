@@ -8,6 +8,7 @@ import TransferForm from '../../components/TransferForm'
 import { useNavigate } from 'react-router-dom'
 import ConnectingWalletLoader from '../../components/ConnectingWalletLoader'
 import ConnectionError from '../../components/ConnectionError'
+import { ROUTES } from '../../constants/routes'
 
 const TransferPage: React.FC<Props> = ({
   address,
@@ -32,7 +33,7 @@ const TransferPage: React.FC<Props> = ({
       onTransfer({
         ...params,
         onSuccess: () => {
-          navigate('/transfer/success')
+          navigate(ROUTES.TRANSFER_SUCCESS)
         },
       })
     } catch (error) {}
@@ -56,7 +57,7 @@ const TransferPage: React.FC<Props> = ({
     if (address && balance) {
       return (
         <Column className="transfer-container">
-          <Button basic onClick={() => navigate('/')}>
+          <Button basic onClick={() => navigate(ROUTES.HOME)}>
             <Icon name="arrow left" />
             Go back to wallet
           </Button>

@@ -5,6 +5,7 @@ import { Props } from './HomePage.types'
 import WalletInfo from '../../components/WalletInfo'
 import ConnectionError from '../../components/ConnectionError'
 import ConnectingWalletLoader from '../../components/ConnectingWalletLoader'
+import { ROUTES } from '../../constants/routes'
 
 const HomePage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecting, error, balance }) => {
   const navigate = useNavigate()
@@ -26,7 +27,7 @@ const HomePage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecti
     return (
       <Column>
         <WalletInfo address={address} balance={balance} />
-        <Button name="transfer" primary onClick={() => navigate('/transfer')}>
+        <Button name="transfer" primary onClick={() => navigate(ROUTES.TRANSFER)}>
           <Icon name="send" />
           Transfer
         </Button>
