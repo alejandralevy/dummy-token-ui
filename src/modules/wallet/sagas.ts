@@ -41,7 +41,6 @@ export function* walletSaga() {
 
 export function* handleConnectWalletRequest() {
   try {
-    yield delay(3000)
     const provider = new ethers.BrowserProvider(windowWithEthereum.ethereum)
     yield call([provider, 'send'], 'eth_requestAccounts', []) as Awaited<ReturnType<typeof provider.send>>
     const signer = (yield call([provider, 'getSigner'])) as Awaited<ReturnType<typeof provider.getSigner>>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Center, Column, Icon, Loader } from 'decentraland-ui'
+import { Button, Center, Column, Icon } from 'decentraland-ui'
 import { useNavigate } from 'react-router-dom'
 import { Props } from './HomePage.types'
 import WalletInfo from '../../components/WalletInfo'
@@ -26,7 +26,7 @@ const HomePage: React.FC<Props> = ({ address, isConnected, onConnect, isConnecti
     return (
       <Column>
         <WalletInfo address={address} balance={balance} />
-        <Button primary onClick={() => navigate('/transfer')} disabled={isConnecting || !isConnected}>
+        <Button name="transfer" primary onClick={() => navigate('/transfer')}>
           <Icon name="send" />
           Transfer
         </Button>
