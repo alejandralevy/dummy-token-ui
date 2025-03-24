@@ -10,7 +10,7 @@ export const isConnected = createSelector([getAddress], address => !!address)
 
 export const isConnecting = createSelector([getWalletState], wallet => wallet.isConnecting)
 
-export const getError = createSelector([getWalletState], wallet => wallet.error)
+export const getError = createSelector([getWalletState], wallet => wallet.connectionError)
 
 export const getBalance = createSelector([getWalletState], wallet =>
   formatUnits(wallet.dummyBalance as BigNumberish, 0)

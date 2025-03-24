@@ -19,3 +19,7 @@ export function getErrorMessage(error: unknown) {
 export function isValidAddress(address: string) {
   return /^0x[a-fA-F0-9]{40}$/.test(address)
 }
+
+export const copyTextToClipboard = (text: string | null) => {
+  text && navigator.clipboard.writeText(text)
+}

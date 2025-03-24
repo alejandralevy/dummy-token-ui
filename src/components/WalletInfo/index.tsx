@@ -1,14 +1,11 @@
 import React from 'react'
 import { Card, CardMeta, Header, Icon, Row, Section } from 'decentraland-ui'
 import './index.css'
+import { copyTextToClipboard } from '../../modules/utils'
 
 type WalletInfoProps = { address: string | null; balance: string | null }
 
 const WalletInfo: React.FC<WalletInfoProps> = ({ address, balance }) => {
-  const handleCopy = () => {
-    address && navigator.clipboard.writeText(address)
-  }
-
   return (
     <div className="wallet-info">
       <Card>
@@ -16,7 +13,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ address, balance }) => {
         <CardMeta className="meta">
           <Row>
             {!!address ? address : 'Address not available :('}
-            <div className="icon-container" onClick={handleCopy}>
+            <div className="icon-container" onClick={() => copyTextToClipboard(address)}>
               <Icon name="copy" className="copy-icon" data-testid="copy-icon" />
             </div>
           </Row>

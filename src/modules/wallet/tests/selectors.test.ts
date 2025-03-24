@@ -17,7 +17,7 @@ describe('wallet selectors', () => {
       wallet: {
         address: '',
         isConnecting: false,
-        error: null,
+        connectionError: null,
         dummyBalance: BigInt(100),
         isLoadingBalance: false,
         balanceError: null,
@@ -52,13 +52,13 @@ describe('wallet selectors', () => {
   })
 
   it('should return error message if error exists', () => {
-    baseState.wallet.error = 'Connection error'
+    baseState.wallet.connectionError = 'Connection error'
     const result = getError(baseState)
     expect(result).toBe('Connection error')
   })
 
   it('should return null if there is no error', () => {
-    baseState.wallet.error = null
+    baseState.wallet.connectionError = null
     const result = getError(baseState)
     expect(result).toBeNull()
   })

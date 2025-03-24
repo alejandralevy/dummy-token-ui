@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 export type WalletState = {
   address: string | null
   isConnecting: boolean
-  error: string | null
+  connectionError: string | null
   dummyBalance: bigint | null
   isLoadingBalance: boolean
   balanceError: string | null

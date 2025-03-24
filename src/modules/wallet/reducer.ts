@@ -18,7 +18,7 @@ import { WalletState } from './types'
 const INITIAL_STATE: WalletState = {
   address: null,
   isConnecting: false,
-  error: null,
+  connectionError: null,
   dummyBalance: BigInt(0),
   isLoadingBalance: false,
   balanceError: null,
@@ -30,16 +30,16 @@ const INITIAL_STATE: WalletState = {
 export function walletReducer(state: WalletState = INITIAL_STATE, action: AnyAction): WalletState {
   switch (action.type) {
     case CONNECT_WALLET_REQUEST: {
-      return { ...state, isConnecting: true, error: null }
+      return { ...state, isConnecting: true, connectionError: null }
     }
     case CONNECT_WALLET_SUCCESS: {
       const { address } = action.payload as ConnectWalletSuccessAction['payload']
-      return { ...state, isConnecting: false, address, error: null }
+      return { ...state, isConnecting: false, address, connectionError: null }
     }
 
     case CONNECT_WALLET_FAILURE: {
       const { error } = action.payload as ConnectWalletFailureAction['payload']
-      return { ...state, isConnecting: false, error }
+      return { ...state, isConnecting: false, connectionError: error }
     }
 
     case GET_WALLET_BALANCE_REQUEST: {
@@ -53,7 +53,7 @@ export function walletReducer(state: WalletState = INITIAL_STATE, action: AnyAct
 
     case GET_WALLET_BALANCE_FAILURE: {
       const { error } = action.payload as ConnectWalletFailureAction['payload']
-      return { ...state, isLoadingBalance: false, error }
+      return { ...state, isLoadingBalance: false, balanceError: error }
     }
 
     case TRANSFER_DUMMY_TOKEN_REQUEST: {
