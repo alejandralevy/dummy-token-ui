@@ -11,10 +11,12 @@ import {
   TRANSFER_DUMMY_TOKEN_REQUEST,
   TRANSFER_DUMMY_TOKEN_FAILURE,
   TRANSFER_DUMMY_TOKEN_SUCCESS,
+  WalletBalanceSuccessAction,
+  WalletBalanceFailureAction,
+  TransferDummyTokenFailureAction,
 } from './actions'
 import { WalletState } from './types'
 
-//TODO: rename error/loading to addressLoading
 const INITIAL_STATE: WalletState = {
   address: null,
   isConnecting: false,
@@ -47,12 +49,12 @@ export function walletReducer(state: WalletState = INITIAL_STATE, action: AnyAct
     }
 
     case GET_WALLET_BALANCE_SUCCESS: {
-      const { dummyBalance } = action.payload as any
+      const { dummyBalance } = action.payload as WalletBalanceSuccessAction['payload']
       return { ...state, dummyBalance, isLoadingBalance: false, balanceError: null }
     }
 
     case GET_WALLET_BALANCE_FAILURE: {
-      const { error } = action.payload as ConnectWalletFailureAction['payload']
+      const { error } = action.payload as WalletBalanceFailureAction['payload']
       return { ...state, isLoadingBalance: false, balanceError: error }
     }
 
@@ -61,7 +63,7 @@ export function walletReducer(state: WalletState = INITIAL_STATE, action: AnyAct
     }
 
     case TRANSFER_DUMMY_TOKEN_FAILURE: {
-      const { error } = action.payload as ConnectWalletFailureAction['payload']
+      const { error } = action.payload as TransferDummyTokenFailureAction['payload']
       return { ...state, isTransfering: false, transferError: error }
     }
 
