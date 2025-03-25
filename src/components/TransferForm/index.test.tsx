@@ -40,6 +40,33 @@ describe('TransferForm', () => {
     expect(screen.getByText(/exceeds the tokens/i)).toBeInTheDocument()
   })
 
+  it('disables button if address is valid but amount is invalid', () => {
+    render(<TransferForm {...baseProps} />)
+
+    fireEvent.change(screen.getByPlaceholderText('0x...'), {
+      target: { value: '0xE3FC7040653768Efb2941a6C26FdB868eD36cA99' },
+    })
+    fireEvent.blur(screen.getByPlaceholderText('0x...'))
+
+    fireEvent.change(screen.getByPlaceholderText('25'), { target: { value: '' } })
+
+    const button = screen.getByRole('button', { name: /transfer/i })
+    expect(button).toBeDisabled()
+  })
+
+  it('disables button if amount is valid but address is invalid', () => {
+    render(<TransferForm {...baseProps} />)
+
+    fireEvent.change(screen.getByPlaceholderText('0x...'), { target: { value: 'invalid' } })
+    fireEvent.blur(screen.getByPlaceholderText('0x...'))
+
+    fireEvent.change(screen.getByPlaceholderText('25'), { target: { value: '10' } })
+    fireEvent.blur(screen.getByPlaceholderText('25'))
+
+    const button = screen.getByRole('button', { name: /transfer/i })
+    expect(button).toBeDisabled()
+  })
+
   it('calls onTransfer when address and amount are valid', () => {
     render(<TransferForm {...baseProps} />)
     fireEvent.change(screen.getByPlaceholderText('0x...'), {
